@@ -8,12 +8,14 @@ from .models import Company
 # Create your views here.
 
 
-class CompanyListCreateAPIView(generics.ListCreateAPIView):
+class CompanyCreateAPIView(generics.CreateAPIView):
+    serializer_class = CompanySrializer
+    permission_classes = [IsAdminUser]
+
+
+class CompanyListAPIView(generics.ListAPIView):
     queryset = Company.objects.all()
     serializer_class = CompanySrializer
-    permission_classes=[IsAdminUser]
-    
-   
 
 
 class CompanyUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
