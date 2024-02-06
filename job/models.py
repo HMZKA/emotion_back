@@ -10,7 +10,7 @@ class Job(models.Model):
     company_id = models.ForeignKey(
         Company, 
         on_delete=models.CASCADE,
-        related_name="company_jobs"
+        related_name="jobs"
     )
     count_applicants = models.IntegerField(null=False)
     applicants=models.ManyToManyField(User)
