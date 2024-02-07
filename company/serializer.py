@@ -6,7 +6,7 @@ from .models import Company
 
 
 class CompanySrializer(serializers.ModelSerializer):
-    jobs=JobSerializer(many=True)
+    jobs=JobSerializer(many=True,read_only=True)
 
     class Meta:
         model = Company

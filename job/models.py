@@ -14,3 +14,9 @@ class Job(models.Model):
     )
     count_applicants = models.IntegerField(null=False)
     applicants=models.ManyToManyField(User)
+    
+    def apply(self, user):
+        if not self.applicants.filter(pk=user.pk).exists():
+            self.applicants.add(user)
+            self.count_applicants += 1
+            self.save()
