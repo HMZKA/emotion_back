@@ -2,6 +2,7 @@ from django.db import models
 
 from company.models import Company
 from user.models import User
+from django.core.exceptions import ValidationError
 
 
 class Job(models.Model):
@@ -20,3 +21,5 @@ class Job(models.Model):
             self.applicants.add(user)
             self.count_applicants += 1
             self.save()
+        else:
+            raise ValidationError("User has already applied to this job.")

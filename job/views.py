@@ -5,6 +5,8 @@ from .models import Job
 from .serializer import JobSerializer
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication,SessionAuthentication
+from django.core.exceptions import ValidationError
+from rest_framework import status
 # Create your views here.
 
 
@@ -34,6 +36,9 @@ class JobApplyView(generics.UpdateAPIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
 
     def patch(self, request, *args, **kwargs):
-        job = self.get_object()
-        job.apply(request.user)
-        return Response({"message":"Job apllied successfully"},200)
+        try:
+            job = self.get_object()
+            job.apply(request.user)
+            return Response({"detail": "Application submitted successfully."}, status=status.HTTP_200_OK)
+        except ValidationError as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
